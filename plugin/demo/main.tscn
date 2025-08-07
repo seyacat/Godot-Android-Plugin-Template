@@ -1,19 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://cg3hylang5fxn"]
+[gd_scene load_steps=3 format=3 uid="uid://cg3hylang5fxn"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_j0gfq"]
+[ext_resource type="Script" uid="uid://cni8o4hss6eu1" path="res://main.gd" id="1_j0gfq"]
+[ext_resource type="Texture2D" uid="uid://cx6fdosfmcips" path="res://icon.svg" id="2_0xm2m"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_j0gfq")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(226, 210)
+scale = Vector2(2.45313, 2.45313)
+texture = ExtResource("2_0xm2m")
 
 [node name="Button" type="Button" parent="."]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = 250.0
-offset_right = 320.0
-offset_bottom = 312.0
+offset_left = 88.0
+offset_top = 378.0
+offset_right = 368.0
+offset_bottom = 440.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Hello World"
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
