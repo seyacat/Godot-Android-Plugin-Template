@@ -1,6 +1,8 @@
 package org.godotengine.plugin.android.template
 
+import android.app.Activity
 import android.content.Intent
+import android.view.View
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
@@ -15,6 +17,31 @@ import android.os.Build
 class GodotAndroidPlugin(godot: Godot): GodotPlugin(godot) {
 
     override fun getPluginName() = BuildConfig.GODOT_PLUGIN_NAME
+
+    override fun onMainCreate(activity: Activity): View? {
+        activity.runOnUiThread {
+            val window = activity.window
+            
+            // Fondo de la ventana totalmente transparente
+            window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+            window.setFormat(PixelFormat.TRANSLUCENT)
+
+            // Bandera para permitir dibujar fuera de límites y overlay
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+            // Hacer la actividad en sí translúcida
+            activity.setTheme(android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
+
+            // Hacer transparente la vista de Godot
+            godot.runOnRenderThread {
+                val surfaceView = godot.renderView as? android.view.SurfaceView
+                surfaceView?.setZOrderOnTop(true)
+                surfaceView?.holder?.setFormat(PixelFormat.TRANSLUCENT)
+                surfaceView?.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            }
+        }
+        return null
+    }
 
     @UsedByGodot
     fun createOverlayView() {
